@@ -27,7 +27,7 @@ contract Tutoria {
         t.confirmado = 0;
         t.cancelado = 0;
         t.hash = hashAux;
-        //tuto.push(t);
+        tuto.push(t);
         return t.hash;
     }
 
