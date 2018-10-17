@@ -7,18 +7,17 @@ contract Tutoria {
         address alumno;
         uint confirmado;
         uint cancelado;
-        bytes32 hash;
+        uint256 hash;
 
 
     }
 
-    tutoriaData[] public tuto;
+    tutoriaData[] public tutoConf;
+    tutoriaData[] public tutoCanc;
 
     mapping (uint256 => tutoriaData) tutorias;
 
-    function solicitar (string _materia, address _idProfesor) 
-    public returns(uint256) {
-
+    function solicitar (string _materia, address _idProfesor) public returns(uint256) {
         require(_idProfesor != msg.sender);
         uint256 hashAux = uint256(keccak256(_materia, _idProfesor));
         tutoriaData t = tutorias[hashAux];
@@ -28,9 +27,8 @@ contract Tutoria {
         t.confirmado = 0;
         t.cancelado = 0;
         t.hash = hashAux;
-        tuto.push(t);
+        //tuto.push(t);
         return t.hash;
-
     }
 
 
@@ -54,16 +52,18 @@ contract Tutoria {
         return t.alumno;
     }
 
-    function confirmar(uint256 key) public view returns (uint) {
-        tutoriaData t = tutorias[key];
+    function confirmar(uint256 key) public {
+        tutoriaData storage t = tutorias[key];
         require(msg.sender == t.idProfesor);
         t.confirmado = 1;
+        tutoConf.push(t);
     }
 
-    function cancelar(uint256 key) public view returns (uint) {
+    function cancelar(uint256 key) public{
         tutoriaData t = tutorias[key];
         require(msg.sender == t.alumno);
         t.cancelado = 1;
+        tutoCanc.push(t);
     }
 
     function estaConfirmado(uint256 key) public view returns (uint) {
