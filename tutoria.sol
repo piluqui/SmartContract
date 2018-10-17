@@ -14,65 +14,64 @@ contract Tutoria {
 
     tutoriaData[] public tuto;
 
-    mapping (address => tutoriaData) tutorias;
-    function solicitar (string _materia, address _idProfesor) public{
+    mapping (uint256 => tutoriaData) tutorias;
 
-        tutoriaData t = tutorias[msg.sender];
+    function solicitar (string _materia, address _idProfesor) 
+    public returns(uint256) {
+
+        require(_idProfesor != msg.sender);
+        uint256 hashAux = uint256(keccak256(_materia, _idProfesor));
+        tutoriaData t = tutorias[hashAux];
         t.alumno = msg.sender;
         t.materia = _materia;
         t.idProfesor = _idProfesor;
         t.confirmado = 0;
         t.cancelado = 0;
-        t.hash = keccak256(t.alumno, t.materia, t.idProfesor, t.confirmado, t.cancelado);
-        //tutoriaData.materia = _materia;
-        //tutoriaData.idProfesor = _idProfesor;
-        require(t.idProfesor != msg.sender);
-        //tutoriaData.alumno = msg.sender;
+        t.hash = hashAux;
         tuto.push(t);
+        return t.hash;
 
     }
 
 
-    function getMateria(address key) public view returns (string) {
+    function getMateria(uint256 key) public view returns (string) {
         tutoriaData t = tutorias[key];
         return t.materia;
     }
 
-    function getHash(address key) public view returns (bytes32) {
+    function getHash(uint256 key) public view returns (uint256) {
         tutoriaData t = tutorias[key];
         return t.hash;
     }
 
-    function getIdProfesor(address key) public view returns (address) {
+    function getIdProfesor(uint256 key) public view returns (address) {
         tutoriaData t = tutorias[key];
         return t.idProfesor;
     }
 
-    function getAlumno(address key) public view returns (address) {
+    function getAlumno(uint256 key) public view returns (address) {
         tutoriaData t = tutorias[key];
         return t.alumno;
     }
 
-    function confirmar(address key) public view returns (uint) {
+    function confirmar(uint256 key) public view returns (uint) {
         tutoriaData t = tutorias[key];
         require(msg.sender == t.idProfesor);
         t.confirmado = 1;
-        return t.confirmado;
     }
 
-    function cancelar(address key) public view returns (uint) {
+    function cancelar(uint256 key) public view returns (uint) {
         tutoriaData t = tutorias[key];
         require(msg.sender == t.alumno);
         t.cancelado = 1;
-        return t.cancelado;
     }
 
-    function estaConfirmado(address key) public view returns (uint) {
+    function estaConfirmado(uint256 key) public view returns (uint) {
         tutoriaData t = tutorias[key];
         return t.confirmado;
     }
 
-    function estaCancelado(address key) public view returns (uint){
+    function estaCancelado(uint256 key) public view returns (uint){
         tutoriaData t = tutorias[key];
         return t.cancelado;
     }
