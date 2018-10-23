@@ -42,15 +42,5 @@ router.get('/last', function(req, res, next) {
   
 });
 
-router.get('/contract', function(req, res, next) {
-
-  web3.eth.getBlock()
-    .then(number => {
-
-      res.send(number.toString());
-
-    });
-  
-});
 
 module.exports = router;
