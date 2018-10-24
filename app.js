@@ -37,7 +37,8 @@ app.post('/', function (req, res) {
   }
 
   myContract = new web3.eth.Contract(abiDefinition, config.addressContract, { data: byteCode, gasPrice: '1000', gas: 200000 });
-  myContract.methods.solicitar(materia, profesor).send({ from: usuario, gas: 200000 });
+  myContract.methods.solicitar(materia, profesor).send({ from: usuario, gas: 200000 }
+    .then(e => (console.log(e)))
 
 })
 //Render metodos.html
