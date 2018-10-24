@@ -35,8 +35,7 @@ contract Tutoria {
         tuto.push(t);
         return indiceAux;
     }
-
-    function getFecha(uint key) public{
+     function getFecha(uint key) public{
         for (uint i=0; i<indice; i++){
           
           if (tuto[i].fecha == key){
@@ -45,8 +44,7 @@ contract Tutoria {
                 
         }
     }
-
-    function getIndex(uint key) public{
+     function getIndex(uint key) public{
         for (uint i=0; i<indice; i++){
           
           if (tuto[i].index == key){
@@ -56,8 +54,7 @@ contract Tutoria {
         }
         
     }
-
-    function getMateria(string key) public{
+     function getMateria(string key) public{
         for (uint i=0; i<indice; i++){
           
           if (keccak256(tuto[i].materia) == keccak256(key)){
@@ -94,8 +91,7 @@ contract Tutoria {
     }
     
     function cancelar(address key) public {
-
-        require(Tutorias[key].alumno == msg.sender);
+         require(Tutorias[key].alumno == msg.sender);
         require(Tutorias[key].confirmado == 0);
         require(Tutorias[key].cancelado == 0);
         Tutorias[key].cancelado=1;
@@ -110,4 +106,4 @@ contract Tutoria {
     }
     */
     
-}
+} 

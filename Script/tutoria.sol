@@ -13,8 +13,7 @@ contract Tutoria {
         uint fecha;
         bytes32 hash;
     }
-
-    function solicitar(string mater, address idProf) public{
+     function solicitar(string mater, address idProf) public{
         require(msg.sender != idProf);
         TutoriaData t = Tutorias[msg.sender];
         t.materia = mater;
@@ -29,8 +28,7 @@ contract Tutoria {
     function getFecha(address key) public view returns (uint) {
         return Tutorias[key].fecha;
     }
-
-    function getHash(address key) public view returns (bytes32) {
+     function getHash(address key) public view returns (bytes32) {
         return Tutorias[key].hash;
     }
     
@@ -54,8 +52,7 @@ contract Tutoria {
     }
     
     function cancelar(address key) public returns (uint){
-
-        require(Tutorias[key].alumno == msg.sender);
+         require(Tutorias[key].alumno == msg.sender);
         require(Tutorias[key].confirmado == 0);
         require(Tutorias[key].cancelado == 0);
         return Tutorias[key].cancelado=1;
@@ -69,4 +66,4 @@ contract Tutoria {
         return Tutorias[key].cancelado;
     }
     
-}
+} 
